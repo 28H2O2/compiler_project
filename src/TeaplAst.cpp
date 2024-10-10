@@ -1,3 +1,4 @@
+// 用于构造 `TeaplAst.h` 中定义的语法树
 #include <cstdlib>
 #include "TeaplAst.h"
 

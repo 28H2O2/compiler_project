@@ -59,13 +59,13 @@ $ lli --version # 查看版本，若出现版本信息则说明安装成功
 
 `lexer.lex`以终结符为输入，向`parser.yacc`返回`token`，可以把`token`理解为“词”。`parser.yacc`则以`token`为输入，根据每个非终结符的规则进行解析，最后构建出AST。
 
-但`lexer.lex`解析的`token`可以不是终结符，比如一个`identifier`可以是一个`token`，但你也可以把字母当作`token`。推荐把`identifier`和`number`当作`token`，这样可以在lex中完成组装数字或变量的工作，让yacc更简洁。
+但`lexer.lex`解析的`token`可以不是终结符，比如一个`identifier`可以是一个`token`，但你也可以把字母当作`token`。推荐把`identifier`和`number`当作`token`，这样可以**在lex中完成组装数字或变量的工作**，让yacc更简洁。
 
 ## Step 2   yacc 声明
 
 `token`在`parser.yacc`的声明部分定义，因此应该先写yacc的声明部分，再写lex，并且`lexer.lex`的开头也要导入yacc编译出的`y.tab.h`库。
 
-给token和非终结符分类，可以是数字类或抽象类，单个字符可以也不定义而直接作为char返回。大多数情况下，导入`TeaplAst.h`，然后使用AST中的节点结构体就是不错的选择。
+给token和非终结符分类，可以是数字类或抽象类，单个字符可以也不定义而直接作为char返回。**大多数情况下，导入`TeaplAst.h`，然后使用AST中的节点结构体就是不错的选择。**
 
 将它们的名字和类别名按以下的格式写入`parser.yacc`的声明部分：
 

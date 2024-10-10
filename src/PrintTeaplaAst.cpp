@@ -1,3 +1,4 @@
+// 用于输出语法树
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -5,7 +6,7 @@
 
 using namespace std;
 int tab = 0;
-void print_tab(ostream& os, string info){
+void print_tab(ostream& os, string info){  // 打印缩进
     os << "\n";
     for(int i=0; i<tab; ++i){
         os << "\t";

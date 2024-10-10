@@ -1,3 +1,4 @@
+// C风格的语法树定义
 #pragma once
 
 typedef struct A_pos_* A_pos; //position information

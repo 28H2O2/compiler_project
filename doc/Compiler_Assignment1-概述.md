@@ -2,19 +2,19 @@
 
 ## 实验介绍
 
-Assignment 1的目标是实现[TeaPL的语法](/Spec/teapl.md)分析最终得到抽象语法树。在本实验中，输入是TeaPL的源代码，输出是TeaPL的抽象语法树。我们将得到抽象语法树打印出来以检查程序的正确性。
+Assignment 1的目标是实现[TeaPL的语法](/Spec/teapl.md)分析最终得到抽象语法树。在本实验中，**输入是TeaPL的源代码，输出是TeaPL的抽象语法树**。我们将得到抽象语法树打印出来以检查程序的正确性。
 
 ### 实验工作流
 
 本次实验的工作流在`compiler.cpp`中可以清楚的看到：我们首先调用`yyparse`来生成我们的抽象语法树（在`TeaplAst.h`中定义，这是一个C风格的定义（方便接入lex和yacc），然后我们调用`aA_Program`将抽象语法树转换为使用STL的定义（为了方便后续的实验），最后调用`print_aA_Program`将转换后的语法树打印出来。
 
-其中，本实验中需要大家完成的部分为使用lex和yacc描述出`yylex`和`yyparse`（即补全`lexer.lex`和`parser.yacc`）以实现语法解析。具体来说lex和yacc在进行语法解析时，工作流程如下：
+其中，本实验中需要大家完成的部分为**使用lex和yacc描述出`yylex`和`yyparse`（即补全`lexer.lex`和`parser.yacc`）以实现语法解析**。具体来说lex和yacc在进行语法解析时，工作流程如下：
 
 ![img](https://chuquan-public-r-001.oss-cn-shanghai.aliyuncs.com/sketch-images/yacc-01.png?x-oss-process=image/resize,w_800)
 
 `lexer.lex`对输入的终结符进行简单处理，然后向`parser.yacc`返回`token`，`parser.yacc`则以`token`为输入，根据每个语法规则进行解析，最后构建出AST。
 
-在上述过程中，`token`的确定是一个值得思考的思考的问题。对于大多数终结符，我们直接将其当作`token`（例如：+,-,*,/）；然而对于字母和数字，其在语法中通常只能被规约为`id`或`num`（例如：`id := [a-z_A-Z][a-z_A-Z0-9]*`，`num := [1-9][0-9]* | 0`），且该生成式可以写成正则表达式，此时，由于lex中可以方便地编写正则表达式，因此通常将`id`和`num`也作为`token`（直接在lex中处理），使得`parser.yacc`的编写更加简洁。
+在上述过程中，`token`的确定是一个值得思考的问题。对于大多数终结符，我们直接将其当作`token`（例如：+,-,*,/）；然而对于字母和数字，其在语法中通常只能被规约为`id`或`num`（例如：`id := [a-z_A-Z][a-z_A-Z0-9]*`，`num := [1-9][0-9]* | 0`），且该生成式可以写成正则表达式，此时，由于lex中可以方便地编写正则表达式，因此通常将`id`和`num`也作为`token`（直接在lex中处理），使得`parser.yacc`的编写更加简洁。
 
 ### 文件介绍
 
